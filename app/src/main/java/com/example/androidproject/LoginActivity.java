@@ -1,12 +1,24 @@
 package com.example.androidproject;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +37,9 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseModule db;
     private FirebaseUser user;
 
+    private ImageView img;
+    private Button imgBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setup(){
+        this.img = findViewById(R.id.camPicture);
+        this.imgBtn = findViewById(R.id.picBtn);
         this.loginText = findViewById(R.id.loginText);
         this.email = findViewById(R.id.loginEmail);
         this.pass = findViewById(R.id.loginPass);
@@ -50,10 +67,23 @@ public class LoginActivity extends AppCompatActivity {
         user = db.getUser();
         if (user!=null) {
             makeToast("Already logged in");
-            logged();
+            this.email.setText(user.getEmail().toString());
+            //logged();
         }
         else
             makeToast("No user logged");
+
+        // take photo section
+        imgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED)
+                    ActivityCompat.requestPermissions(LoginActivity.this,new String[] {Manifest.permission.CAMERA},CAMERA_REQUEST);
+                else
+                    takePhoto();
+            }
+        });
+
         this.loginText.setText(user!=null? "Welcome "+user.getEmail():"Please log in");
 
     }
@@ -63,6 +93,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void register(String email,String password){
+        if (email.isEmpty() || password.isEmpty()) {
+            makeToast("Invalid info");
+            return;
+        }
         db.getAuth().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -91,6 +125,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signin(String email,String password){
+        if (email.isEmpty() || password.isEmpty()) {
+            makeToast("Invalid info");
+            return;
+        }
         db.getAuth().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -115,4 +153,24 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // take photo section
+
+    final int CAMERA_ACTION = 101;
+    final int CAMERA_REQUEST = 201;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==CAMERA_ACTION && resultCode==RESULT_OK)
+            img.setImageBitmap((Bitmap) data.getExtras().get("data"));
+    }
+
+    public void takePhoto(){
+        Intent intent = new Intent();
+        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (intent.resolveActivity(getPackageManager()) != null)
+            startActivityForResult(intent, CAMERA_ACTION);
+        else
+            makeToast("Camera access denied");
+    }
 }

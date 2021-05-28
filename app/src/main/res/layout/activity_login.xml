@@ -19,13 +19,21 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="150dp"
         android:hint="Email"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:inputType="textEmailAddress"
         android:id="@+id/loginEmail"
         />
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="150dp"
         android:hint="Password"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:inputType="textPassword"
         android:id="@+id/loginPass"
         />
     <Button
@@ -38,5 +46,18 @@
         android:layout_height="wrap_content"
         android:text="Register"
         android:id="@+id/registerBtn"/>
+
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Take Picture"
+        android:id="@+id/picBtn"/>
+    <ImageView
+        android:id="@+id/camPicture"
+        android:layout_margin="20dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"/>
 
 </LinearLayout>
