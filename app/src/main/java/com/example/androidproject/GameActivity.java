@@ -60,6 +60,10 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 max = snapshot.getValue(Score.class);
+                if (max==null) {    // if there isn't a score in the database
+                    FirebaseModule.getInstance().getDatabase().getReference("scores").child(score.getKey()).setValue(score);
+                    max = new Score();
+                }
                 game.setMax(max);
                 maxText.setText(max.toString());
             }

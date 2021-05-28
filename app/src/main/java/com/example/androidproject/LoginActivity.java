@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
@@ -71,7 +72,13 @@ public class LoginActivity extends AppCompatActivity {
                             makeToast("Welcome new user "+email);
                             loginText.setText(email+" registered");
                             user = db.getAuth().getCurrentUser();
-                            logged();
+                            Score score = new Score(email);
+                            FirebaseModule.getInstance().getDatabase().getReference("scores").child(score.getKey()).setValue(score).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    logged();
+                                }
+                            });
                         } else {
                             // If sign in fails, display a message to the user.
                             System.err.println(task.getException());
