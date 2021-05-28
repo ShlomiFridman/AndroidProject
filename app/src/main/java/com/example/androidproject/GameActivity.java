@@ -66,6 +66,7 @@ public class GameActivity extends AppCompatActivity {
 
 
     private void startGame(){
+        this.guess.setVisibility(View.INVISIBLE);
         this.score = new Score(db.getUser().getEmail());
         this.max = new Score();
         this.db.getDatabase().getReference("scores").child(score.getKey()).addValueEventListener(new ValueEventListener() {
@@ -78,6 +79,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 game.setMax(max);
                 maxText.setText(max.toString());
+                guess.setVisibility(View.VISIBLE);
             }
 
             @Override
