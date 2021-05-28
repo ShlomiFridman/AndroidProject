@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center|top"
+    tools:context=".GameActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Easy"
+                android:layout_margin="10dp"
+                android:id="@+id/gameEasyMode"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medium"
+                android:layout_margin="10dp"
+                android:id="@+id/gameMediumMode"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hard"
+                android:layout_margin="10dp"
+                android:id="@+id/gameHardMode"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="10dp"
+                android:minHeight="0dp"
+                android:text="+"
+                android:layout_margin="10dp"
+                android:id="@+id/gameOnlyPlus"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="10dp"
+                android:minHeight="0dp"
+                android:text="-"
+                android:layout_margin="10dp"
+                android:id="@+id/gameOnlyMinus"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="10dp"
+                android:minHeight="0dp"
+                android:text="x"
+                android:layout_margin="10dp"
+                android:id="@+id/gameOnlyTimes"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="10dp"
+                android:minHeight="0dp"
+                android:text="any"
+                android:layout_margin="10dp"
+                android:id="@+id/gameAnyOp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:id="@+id/gameQuestion"/>
+
+            <EditText
+                android:id="@+id/gameGuessInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="40dp"
+                android:height="10dp"
+                android:layout_margin="10dp"
+                android:inputType="numberSigned" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:text="Guess"
+                android:id="@+id/gameGuessBtn"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current Score"
+            android:id="@+id/scoreText"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current Score"
+            android:id="@+id/maxText"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
