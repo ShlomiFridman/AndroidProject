@@ -3,6 +3,7 @@ package com.example.androidproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -38,6 +39,12 @@ public class GameActivity extends AppCompatActivity {
         setup();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        this.startGame();
+    }
+
     private void setup(){
         this.text = findViewById(R.id.gameQuestion);
         this.scoreText = findViewById(R.id.scoreText);
@@ -54,6 +61,11 @@ public class GameActivity extends AppCompatActivity {
         this.anyOp = findViewById(R.id.gameAnyOp);
 
         this.db = FirebaseModule.getInstance();
+        this.startGame();
+    }
+
+
+    private void startGame(){
         this.score = new Score(db.getUser().getEmail());
         this.max = new Score();
         this.db.getDatabase().getReference("scores").child(score.getKey()).addValueEventListener(new ValueEventListener() {
@@ -75,11 +87,6 @@ public class GameActivity extends AppCompatActivity {
         });
         this.maxText.setText(max.toString());
         this.scoreText.setText(score.toString());
-        this.startGame();
-    }
-
-
-    private void startGame(){
         this.game = new Game(score,max);
         this.game.newRound();
         this.updateQuestion();
@@ -149,8 +156,13 @@ public class GameActivity extends AppCompatActivity {
             }
             this.scoreText.setText(score.toString());
         }
-        else
-            this.makeToast("Incorrect, The answer was "+this.game.getRes());
+        else {
+            this.makeToast("Incorrect, The answer was " + this.game.getRes());
+            this.db.setScore(score);
+            this.db.setMax(max);
+            Intent intent = new Intent(this,EndActivity.class);
+            startActivity(intent);
+        }
         this.newRound();
     }
 

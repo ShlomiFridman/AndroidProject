@@ -22,7 +22,7 @@ public class Score implements Comparable<Score>{
 
     // score ++
     public void inc(int lv){
-        this.score++;
+        this.score+=lv;
         switch (lv){
             case 1:
                 this.easy++;
@@ -46,7 +46,9 @@ public class Score implements Comparable<Score>{
 
     // get firebase key, can not enter an email with .
     public String getKey(){
-        return this.email.replace('.', ',');
+        if (this.email.equals("Max"))
+            return "Max";
+        return this.email.substring(0,this.email.indexOf("@")).replace('.', ',');
     }
 
     public String getEmail() {
@@ -96,6 +98,6 @@ public class Score implements Comparable<Score>{
 
     @Override
     public String toString(){
-        return String.format("%s Score: %d [ Easy: %d | Medium: %d | Hard: %d ]",email,score,easy,medium,hard);
+        return String.format("%s Score: %d\n[ Easy: %d | Medium: %d | Hard: %d ]",getKey(),score,easy,medium,hard);
     }
 }

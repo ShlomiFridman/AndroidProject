@@ -8,6 +8,7 @@ public class FirebaseModule {
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
+    private Score max,score;
 
     private static FirebaseModule instance;
 
@@ -31,6 +32,19 @@ public class FirebaseModule {
     }
     public FirebaseDatabase getDatabase(){
         return this.database;
+    }
+
+    public void setScore(Score score){
+        this.score = score;
+    }
+    public void setMax(Score max){
+        this.max = max;
+    }
+    public Score getScore(){
+        return this.score;
+    }
+    public Score getMax(){
+        return this.max;
     }
 
 }
