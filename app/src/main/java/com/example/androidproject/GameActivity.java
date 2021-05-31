@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ public class GameActivity extends AppCompatActivity {
     private Button easy,medium,hard,guessBtn;
     private Button onlyPlus,onlyMinus,onlyTimes,anyOp;
     private EditText guess;
+    private ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setup(){
+        this.img = findViewById(R.id.imgMap);
         this.text = findViewById(R.id.gameQuestion);
         this.scoreText = findViewById(R.id.scoreText);
         this.maxText = findViewById(R.id.maxText);
@@ -61,6 +65,8 @@ public class GameActivity extends AppCompatActivity {
         this.anyOp = findViewById(R.id.gameAnyOp);
 
         this.db = FirebaseModule.getInstance();
+        if (db.img!=null)
+            this.img.setImageBitmap(db.img);
         this.startGame();
     }
 
