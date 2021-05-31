@@ -41,4 +41,9 @@
         android:gravity="center_horizontal"
         android:id="@+id/finalMax"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Try Again"
+        android:id="@+id/againBtn"/>
 </LinearLayout>

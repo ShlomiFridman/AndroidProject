@@ -1,5 +1,6 @@
 package com.example.androidproject.ui.GameOver;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.androidproject.EndActivity;
 import com.example.androidproject.FirebaseModule;
+import com.example.androidproject.GameActivity;
 import com.example.androidproject.R;
 import com.example.androidproject.databinding.FragmentFinalscoreBinding;
 
@@ -47,8 +50,15 @@ public class FinalScoreFragment extends Fragment {
         score = view.findViewById(R.id.finalScore);
         max = view.findViewById(R.id.finalMax);
         camImg = view.findViewById(R.id.camPicture);
-        btn = view.findViewById(R.id.picBtn);
+        btn = view.findViewById(R.id.againBtn);
         score.setText(db.getScore().toString());
         max.setText(db.getMax().toString());
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(view.getContext(), GameActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
